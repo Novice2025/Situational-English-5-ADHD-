@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXTATION: Lego Disruptive Chain Block Method™ - Story Mode 🚀</title>
+    <!-- Google Fonts for global typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+    <!--
+        INLINE STYLES FOR INITIAL LOAD AND ROBUSTNESS:
+        These styles are included directly in the HTML to ensure the core "Batman Computer / Star Wars Console"
+        aesthetic is present immediately upon load, even before external CSS might fully parse or if you're
+        viewing the raw HTML without a build process. They carefully implement the color variables and design
+        specifics from the NEXTATION WEBSITE COLOUR SYSTEM AND USAGE.pdf.
+    -->
+    <style>
+        /* Global Colour Variables and Design Tokens */
+        :root {
+            --bg-main: #02030b;
+            --bg-gradient: radial-gradient(circle at top, #1c1f3b 0%, #050716 45%, #02030b 100%);
+            --card-bg: rgba(15, 18, 40, 0.92);
+            --card-soft-bg: rgba(18, 21, 50, 0.88);
+            --accent-cyan: #4ef2ff;
+            --accent-pink: #ff2f92;
+            --accent-green: #4dff9b;
+            --accent-yello: #ffe25f;
+            --accent-purple: #aa5dff;
+            --muted: rgba(255,255,255,0.65);
+            --border-glow: rgba(120,120,255,0.45);
+            --shadow-strong: 0 0 36px rgba(130,80,255,0.6);
+            --shadow-soft: 0 0 20px rgba(0,0,0,0.65);
+            --radius-lg: 22px;
+            --radius-md: 16px;
+            --radius-sm: 10px;
+            --transition-fast: 0.18s ease-out;
+            --transition-med: 0.28s ease-out;
+
+            --tab-normal-bg: radial-gradient(circle at top, rgba(255,255,255,0.09), rgba(7,10,28,0.96));
+            --tab-normal-border: rgba(130,140,200,0.4);
+            --tab-hover-border-strong: rgba(120,120,255,0.6);
+            --tab-hover-shadow: 0 0 20px rgba(120,120,255,0.35);
+            --tab-active-bg: radial-gradient(circle at top, rgba(255,255,255,0.15), rgba(21,13,51,0.98));
+            --tab-active-border: rgba(103,255,196,0.9);
+            --tab-active-shadow: 0 0 24px rgba(79,255,204,0.6);
+            --tab-completed-bg: radial-gradient(circle at top, rgba(77,255,155,0.1), rgba(10,30,15,0.96));
+            --tab-completed-border: rgba(77,255,155,0.6);
+            --tab-completed-shadow: 0 0 15px rgba(77,255,155,0.4);
+        }
+
+        /* Base styles for the entire page */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--bg-main);
+            background-image: var(--bg-gradient);
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Header styling */
+        header {
+            background: linear-gradient(to right, rgba(15,18,40,0.95), rgba(6,8,26,0.95));
+            padding: 20px 40px;
+            border-bottom: 1px solid var(--border-glow);
+            box-shadow: var(--shadow-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .teacher-orb {
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle at center, var(--accent-cyan) 0%, var(--accent-purple) 60%, transparent 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 25px var(--accent-cyan), 0 0 40px var(--accent-purple);
+            animation: pulse-orb 3s infinite alternate ease-in-out;
+            flex-shrink: 0;
+        }
+
+        @keyframes pulse-orb {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.08); opacity: 1; }
+        }
+
+        .logo-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.8em;
+            color: var(--accent-cyan);
+            text-shadow: 0 0 15px rgba(78,242,255,0.7);
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .logo-subtitle {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9em;
+            color: var(--muted);
+            margin: 0;
+            text-shadow: 0 0 5px rgba(255,255,255,0.2);
+        }
+
+        /* Main application container */
+        .main-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Tab navigation styling */
+        .tab-navigation {
+            display: flex;
+            flex-wrap: wrap; /* Allow tabs to wrap on smaller screens */
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-glow);
+            border-radius: var(--radius-lg);
+            padding: 15px;
+            box-shadow: var(--shadow-soft);
+            width: 100%;
+        }
+
+        .tab-item {
+            flex: 1 1 auto; /* Allow items to grow and shrink, but maintain minimum width */
+            min-width: 120px; /* Ensure tabs don't get too small */
+            padding: 12px 18px;
+            background: var(--tab-normal-bg);
+            border: 1px solid var(--tab-normal-border);
+            border-radius: var(--radius-md);
+            color: var(--muted);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.95em;
+            font-weight: 700;
+            text-align: center;
+            cursor: pointer;
+            transition: all var(--transition-med);
+            user-select: none; /* Prevent text selection */
+        }
+
+        .tab-item:hover {
+            border-color: var(--tab-hover-border-strong);
+            box-shadow: var(--tab-hover-shadow);
+            color: #ffffff;
+        }
+
+        .tab-item.active {
+            background: var(--tab-active-bg);
+            border-color: var(--tab-active-border);
+            box-shadow: var(--tab-active-shadow);
+            color: var(--accent-green);
+            text-shadow: 0 0 8px rgba(79,255,204,0.6);
+        }
+
+        .tab-item.completed {
+            background: var(--tab-completed-bg);
+            border-color: var(--tab-completed-border);
+            box-shadow: var(--tab-completed-shadow);
+            color: var(--accent-green);
+            text-shadow: 0 0 5px rgba(77,255,155,0.4);
+        }
+
+        /* Lesson panel styling */
+        .lesson-panel {
+            background: var(--card-bg);
+            border: 1px solid var(--border-glow);
+            border-radius: var(--radius-lg);
+            padding: 30px;
+            box-shadow: var(--shadow-strong);
+            width: 100%;
+            max-width: 900px;
+            text-align: left;
+            margin-bottom: 30px;
+        }
+
+        .lesson-panel h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            color: var(--accent-cyan);
+            font-size: 2.2em;
+            margin-top: 0;
+            text-shadow: 0 0 12px rgba(78,242,255,0.6);
+            text-align: center;
+            margin-bottom: 30px;
+            line-height: 1.3;
+        }
+
+        .lesson-panel h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            color: var(--accent-yello);
+            text-shadow: 0 0 8px rgba(255,226,95,0.5);
+        }
+
+        .story-section, .exercise-section {
+            background: var(--card-soft-bg);
+            border: 1px solid rgba(120,120,255,0.3);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin-bottom: 20px;
+            line-height: 1.7;
+            font-size: 1.05em;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .story-section h4 {
+            color: var(--accent-pink);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.3em;
+            margin-top: 0;
+            margin-bottom: 10px;
+            text-shadow: 0 0 6px rgba(255,47,146,0.4);
+        }
+
+        .story-section p, .exercise-section p {
+            margin-bottom: 10px;
+        }
+
+        .expression-highlight {
+            color: var(--accent-green);
+            font-weight: bold;
+            text-shadow: 0 0 8px #4dff9b;
+        }
+
+        .separator {
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--border-glow), transparent);
+            margin: 30px 0;
+        }
+
+        /* Exercise specific styles */
+        .options {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .options label {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: var(--radius-sm);
+            padding: 12px 15px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .options label:hover {
+            background: rgba(255,255,255,0.15);
+            border-color: var(--accent-cyan);
+        }
+
+        .options input[type="radio"] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--accent-purple);
+            border-radius: 50%;
+            outline: none;
+            cursor: pointer;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .options input[type="radio"]:checked {
+            background-color: var(--accent-green);
+            border-color: var(--accent-green);
+            box-shadow: 0 0 8px var(--accent-green);
+        }
+
+        .options input[type="radio"]:checked::before {
+            content: '';
+            display: block;
+            width: 8px;
+            height: 8px;
+            background: #02030b;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .options label.correct {
+            background: rgba(77,255,155,0.15);
+            border-color: var(--accent-green);
+            box-shadow: 0 0 10px rgba(77,255,155,0.5);
+        }
+
+        .options label.incorrect {
+            background: rgba(255,47,146,0.15);
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 10px rgba(255,47,146,0.5);
+        }
+
+        .exercise-section button {
+            background: linear-gradient(45deg, var(--accent-purple), var(--accent-pink));
+            border: none;
+            border-radius: var(--radius-md);
+            padding: 12px 25px;
+            color: #ffffff;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1em;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: all var(--transition-fast);
+            box-shadow: 0 4px 15px rgba(170,93,255,0.4);
+            display: block;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .exercise-section button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(170,93,255,0.6);
+        }
+
+        .explanation {
+            background: rgba(78,242,255,0.1);
+            border: 1px solid var(--accent-cyan);
+            border-radius: var(--radius-md);
+            padding: 15px;
+            margin-top: 20px;
+            color: rgba(255,255,255,0.95);
+            font-size: 0.95em;
+            line-height: 1.6;
+            box-shadow: 0 0 10px rgba(78,242,255,0.3);
+        }
+
+        .explanation strong {
+            color: var(--accent-yello);
+            text-shadow: 0 0 5px rgba(255,226,95,0.5);
+        }
+
+        /* Footer styling */
+        footer {
+            background: linear-gradient(to right, rgba(6,8,26,0.95), rgba(15,18,40,0.95));
+            padding: 20px 40px;
+            border-top: 1px solid var(--border-glow);
+            box-shadow: var(--shadow-soft);
+            text-align: center;
+            font-size: 0.85em;
+            color: var(--muted);
+            margin-top: auto; /* Pushes footer to the bottom */
+        }
+
+        footer span {
+            color: var(--accent-pink);
+            text-shadow: 0 0 5px rgba(255,47,146,0.3);
+        }
+
+        .highlight-name {
+            color: var(--accent-green);
+            font-weight: bold;
+            text-shadow: 0 0 5px #4dff9b;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+            }
+
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+
+            .logo-title {
+                font-size: 1.5em;
+            }
+
+            .logo-subtitle {
+                font-size: 0.8em;
+            }
+
+            .teacher-orb {
+                width: 50px;
+                height: 50px;
+            }
+
+            .tab-navigation {
+                flex-direction: column;
+                padding: 10px;
+                gap: 8px;
+            }
+
+            .tab-item {
+                min-width: unset;
+                width: 100%;
+                padding: 10px 15px;
+                font-size: 0.9em;
+            }
+
+            .lesson-panel {
+                padding: 20px;
+            }
+
+            .lesson-panel h2 {
+                font-size: 1.8em;
+            }
+
+            .lesson-panel h3 {
+                font-size: 1.3em;
+            }
+
+            .story-section, .exercise-section {
+                padding: 15px;
+                font-size: 1em;
+            }
+
+            .exercise-section button {
+                padding: 10px 20px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER SECTION -->
+    <header>
+        <div class="header-content">
+            <div class="teacher-orb"></div>
+            <div>
+                <h1 class="logo-title">Daby's Lego Disruptive Chain Block Method™ 🧠</h1>
+                <p class="logo-subtitle">Thinking simulator for English mastery 🚀</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN APPLICATION CONTAINER -->
+    <div class="main-container">
+        <!-- TAB NAVIGATION -->
+        <nav id="tab-navigation" class="tab-navigation">
+            <!-- Tabs will be dynamically inserted here by JavaScript -->
+        </nav>
+
+        <!-- LESSON PANEL (Dynamic Content Area) -->
+        <section id="lesson-panel" class="lesson-panel">
+            <h2 id="lesson-title"></h2>
+            <div id="lesson-content">
+                <!-- Lesson content will be dynamically loaded here by JavaScript -->
+                <p style="text-align: center; color: var(--muted); font-size: 1.1em;">
+                    Bem-vindo ao seu simulador de pensamento em inglês! 🌟
+                </p>
+                <p style="text-align: center; color: var(--muted); margin-top: 15px;">
+                    Aqui, você aprenderá a pensar como um nativo, não a traduzir. Cada situação é um bloco de construção para sua fluência.
+                </p>
+                <p style="margin-top: 25px; font-weight: bold; color: var(--accent-green); text-shadow: 0 0 8px #4dff9b; text-align: center;">
+                    Let's make you think in English, not translate! ✨
+                </p>
+                <div class="separator"></div>
+                <p style="font-size: 0.9em; text-align: center; color: var(--muted);">
+                    *(Clique em uma das situações acima para começar sua jornada e transformar seu inglês!)*
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <!-- FOOTER SECTION -->
+    <footer>
+        <p>&copy; 2026 Crafted with <span>&#10084;</span> by <span class="highlight-name">Daby</span>. All rights reserved.</p>
+        <p>Powered by the 🧠 Lego Disruptive Chain Block Method™.</p>
+    </footer>
+
+    <!-- JavaScript for dynamic tab content -->
+    <script>
+        const lessons = [
+            {
+                id: 'situation-1',
+                tabTitle: 'Situation 1 😠➡️😌',
+                expression: 'Easy, easy',
+                story_pt: `
+                    <h4>Na Cozinha Apurada 🍳</h4>
+                    <p>Maria estava na cozinha, apressada para terminar o jantar antes que os convidados chegassem. Ela cortava os legumes com tanta força que a tábua de corte balançava.</p>
+                    <p>Seu marido, João, vendo a cena, se aproximou calmamente e disse: <span class="expression-highlight">"Calma, calma, Maria! Não precisa dessa pressa toda."</span></p>
+                `,
+                story_en: `
+                    <h4>In the Rushed Kitchen 🍳</h4>
+                    <p>Maria was in the kitchen, rushing to finish dinner before the guests arrived. She was chopping vegetables so forcefully that the cutting board was shaking.</p>
+                    <p>Her husband, João, seeing the scene, calmly approached and said: <span class="expression-highlight">"Easy, easy, Maria! No need to rush so much."</span></p>
+                `,
+                english_situation: `
+                    <p>You use "Easy, easy" to tell someone to calm down, slow down, or not to be so aggressive or hurried. It's a gentle way to de-escalate a tense or rushed situation. 🧘‍♀️</p>
+                `,
+                exercise: {
+                    question: `
+                        <p>Seu amigo está tentando consertar algo e está ficando muito irritado, batendo nas ferramentas.</p>
+                        <p>O que você diria para ele?</p>
+                    `,
+                    options: [
+                        { text: 'A) "Relax, relax!"', isCorrect: false },
+                        { text: 'B) "Easy, easy!"', isCorrect: true },
+                        { text: 'C) "Go slow, go slow!"', isCorrect: false }
+                    ],
+                    explanation: `
+                        <p><strong style="color: var(--accent-yello);">Por quê?</strong> "Easy, easy!" é a expressão perfeita para pedir a alguém que se acalme ou diminua a intensidade quando está agindo com raiva ou pressa. É mais idiomático do que "Relax, relax!" ou "Go slow, go slow!" neste contexto. 😌</p>
+                    `
+                }
+            },
+            {
+                id: 'situation-2',
+                tabTitle: 'Situation 2 🐢',
+                expression: 'Easy on it',
+                story_pt: `
+                    <h4>Dirigindo na Chuva 🌧️</h4>
+                    <p>Pedro estava aprendendo a dirigir e pegou o carro em um dia de chuva forte. Ele estava um pouco nervoso e acelerava demais nas curvas.</p>
+                    <p>Sua instrutora, Dona Clara, percebeu a tensão e o alertou: <span class="expression-highlight">"Pedro, vá com calma no volante, por favor. A pista está escorregadia."</span></p>
+                `,
+                story_en: `
+                    <h4>Driving in the Rain 🌧️</h4>
+                    <p>Pedro was learning to drive and took the car out on a day of heavy rain. He was a bit nervous and was accelerating too much on the turns.</p>
+                    <p>His instructor, Dona Clara, noticed the tension and warned him: <span class="expression-highlight">"Pedro, easy on it with the steering wheel, please. The road is slippery."</span></p>
+                `,
+                english_situation: `
+                    <p>You use "Easy on it" to tell someone to be gentle, careful, or to go slowly with something, often a physical action or a delicate object. It means "handle with care" or "don't be too rough/fast." 🤏</p>
+                `,
+                exercise: {
+                    question: `
+                        <p>Você está ajudando um amigo a carregar uma caixa cheia de copos de vidro.</p>
+                        <p>Ele está andando muito rápido.</p>
+                        <p>O que você diria a ele?</p>
+                    `,
+                    options: [
+                        { text: 'A) "Go slow with it!"', isCorrect: false },
+                        { text: 'B) "Be careful with it!"', isCorrect: false },
+                        { text: 'C) "Easy on it!"', isCorrect: true }
+                    ],
+                    explanation: `
+                        <p><strong style="color: var(--accent-yello);">Por quê?</strong> "Easy on it!" é a forma mais natural e idiomática de pedir para alguém ir com calma ou ser delicado com algo. É mais conciso e comum do que as outras opções. 📦</p>
+                    `
+                }
+            },
+            {
+                id: 'situation-3',
+                tabTitle: 'Situation 3 👋',
+                expression: 'Take it easy, mate',
+                story_pt: `
+                    <h4>Despedida Após um Dia Estressante 😩</h4>
+                    <p>No final de um dia de trabalho particularmente caótico, Ana estava exausta e reclamando do estresse.</p>
+                    <p>Seu colega, Ricardo, que já estava de saída, deu um tapinha amigável no ombro dela e disse: <span class="expression-highlight">"Relaxa, amiga, o dia acabou. Descanse bem!"</span></p>
+                `,
+                story_en: `
+                    <h4>Farewell After a Stressful Day 😩</h4>
+                    <p>At the end of a particularly chaotic workday, Ana was exhausted and complaining about the stress.</p>
+                    <p>Her colleague, Ricardo, who was already leaving, gave her a friendly pat on the shoulder and said: <span class="expression-highlight">"Take it easy, mate, the day's over. Get some good rest!"</span></p>
+                `,
+                english_situation: `
+                    <p>This is a friendly, informal way to say goodbye, often implying "have a good time," "relax," or "don't work too hard." "Mate" is a common informal term of address, especially in British English and Australian English. 👋</p>
+                `,
+                exercise: {
+                    question: `
+                        <p>Você está se despedindo de um amigo que teve uma semana muito difícil.</p>
+                        <p>O que você diria para ele relaxar e ter um bom fim de semana?</p>
+                    `,
+                    options: [
+                        { text: 'A) "Relax, my friend!"', isCorrect: false },
+                        { text: 'B) "Have a good weekend!"', isCorrect: false },
+                        { text: 'C) "Take it easy, mate!"', isCorrect: true }
+                    ],
+                    explanation: `
+                        <p><strong style="color: var(--accent-yello);">Por quê?</strong> "Take it easy, mate!" é uma despedida informal e amigável que sugere relaxamento e um bom descanso, perfeita para um amigo após uma semana difícil. É mais idiomática do que as outras opções para transmitir essa combinação de sentimentos. 😌</p>
+                    `
+                }
+            },
+            {
+                id: 'situation-4',
+                tabTitle: 'Situation 4 ✨',
+                expression: 'Easy peasy',
+                story_pt: `
+                    <h4>Montando um Móvel Novo 🛠️</h4>
+                    <p>Carlos comprou um móvel para montar em casa e estava preocupado com a complexidade. Ele abriu o manual e começou a seguir as instruções.</p>
+                    <p>Para sua surpresa, os passos eram muito claros e as peças se encaixavam perfeitamente. Ele terminou em minutos e disse para si mesmo: <span class="expression-highlight">"Nossa, foi moleza!"</span></p>
+                `,
+                story_en: `
+                    <h4>Assembling New Furniture 🛠️</h4>
+                    <p>Carlos bought a piece of furniture to assemble at home and was worried about its complexity. He opened the manual and started following the instructions.</p>
+                    <p>To his surprise, the steps were very clear, and the parts fit perfectly. He finished in minutes and said to himself: <span class="expression-highlight">"Wow, that was easy peasy!"</span></p>
+                `,
+                english_situation: `
+                    <p>You use "Easy peasy" (often followed by "lemon squeezy") to describe a task or problem that is extremely simple, straightforward, and requires very little effort. It's informal and often used with a lighthearted tone. 🍋</p>
+                `,
+                exercise: {
+                    question: `
+                        <p>Sua irmã te pergunta se você conseguiu resolver um quebra-cabeça que parecia difícil.</p>
+                        <p>Você o resolveu em segundos.</p>
+                        <p>Como você descreveria a tarefa?</p>
+                    `,
+                    options: [
+                        { text: 'A) "It was very simple."', isCorrect: false },
+                        { text: 'B) "It was easy peasy!"', isCorrect: true },
+                        { text: 'C) "It was not hard."', isCorrect: false }
+                    ],
+                    explanation: `
+                        <p><strong style="color: var(--accent-yello);">Por quê?</strong> "Easy peasy!" é uma expressão informal e divertida para dizer que algo foi extremamente fácil. É mais expressiva e idiomática do que as outras opções para transmitir a ideia de "moleza". ✨</p>
+                    `
+                }
+            },
+            {
+                id: 'situation-5',
+                tabTitle: 'Situation 5 🩺',
+                expression: 'I am a doctor',
+                story_pt: `
+                    <h4>Em uma Emergência no Avião ✈️</h4>
+                    <p>Durante um voo, um passageiro começou a passar mal. A aeromoça fez um anúncio urgente: "Há algum médico a bordo?"</p>
+                    <p>Imediatamente, uma mulher na fileira da frente levantou a mão e disse: <span class="expression-highlight">"Sim, eu sou médica. Posso ajudar!"</span></p>
+                `,
+                story_en: `
+                    <h4>In an Emergency on a Plane ✈️</h4>
+                    <p>During a flight, a passenger started feeling unwell. The flight attendant made an urgent announcement: "Is there a doctor on board?"</p>
+                    <p>Immediately, a woman in the front row raised her hand and said: <span class="expression-highlight">"Yes, I am a doctor. I can help!"</span></p>
+                `,
+                english_situation: `
+                    <p>You are stating your profession as a medical practitioner. In English, "doctor" primarily refers to a medical doctor or someone with a PhD. Unlike in Portuguese ("doutor"), it's not typically used as a general honorific for lawyers, engineers, or other professionals. 👩‍⚕️👨‍⚕️</p>
+                `,
+                exercise: {
+                    question: `
+                        <p>Você está em uma festa e alguém pergunta qual é a sua profissão.</p>
+                        <p>Você é um médico que trabalha em um hospital.</p>
+                        <p>Como você responderia?</p>
+                    `,
+                    options: [
+                        { text: 'A) "I am a doctor."', isCorrect: true },
+                        { text: 'B) "I am a Doutor."', isCorrect: false },
+                        { text: 'C) "I work as a doctor."', isCorrect: false }
+                    ],
+                    explanation: `
+                        <p><strong style="color: var(--accent-yello);">Por quê?</strong> "I am a doctor" é a forma direta e correta de afirmar sua profissão médica. Em inglês, "doctor" é usado especificamente para médicos ou pessoas com doutorado. Evite "Doutor" como em português, pois não tem o mesmo uso honorífico geral. "I work as a doctor" também é correto, mas "I am a doctor" é mais direto para a profissão. 🏥</p>
+                    `
+                }
+            },
+            {
+                id: 'situation-6',
+                tabTitle: 'Situation 6 🎓',
+                expression: 'I am professor',
+                story_pt: `
+                    <h4>Em uma Conferência Acadêmica 📚</h4>
+                    <p>Na recepção de uma conferência universitária, um estudante abordou um palestrante renomado.</p>
+                    <p>O estudante perguntou: "Com licença, o senhor é o Dr. Silva?"</p>
+                    <p>O palestrante sorriu e respondeu: <span class="expression-highlight">"Sim, sou o Professor Silva, da Universidade Federal."</span></p>
+                `,
+                story_en: `
+                    <h4>At an Academic Conference 📚</h4>
+                    <p>At the reception of a university conference, a student approached a renowned speaker.</p>
+                    <p>The student asked: "Excuse me, are you Dr. Silva?"</p>
+                    <p>The speaker smiled and replied: <span class="expression-highlight">"Yes, I am Professor Silva, from the Federal University."</span></p>
+                `,
+                english_situation: `
+                    <p>You are stating your profession as a university-level educator. In English, "professor" is typically reserved for academics at colleges or universities. For school teachers, we usually say "teacher." 👨‍🏫👩‍🏫</p>
+                `,
+                exercise: {
+                    question: `
+                        <p>Você está se apresentando em um evento universitário.</p>
+                        <p>Você leciona em uma faculdade.</p>
+                        <p>Como você se apresentaria?</p>
+                    `,
+                    options: [
+                        { text: 'A) "I am a teacher."', isCorrect: false },
+                        { text: 'B) "I am Professor [Your Last Name]."', isCorrect: true },
+                        { text: 'C) "I am a school professor."', isCorrect: false }
+                    ],
+                    explanation: `
+                        <p><strong style="color: var(--accent-yello);">Por quê?</strong> "I am Professor [Your Last Name]" é a forma correta e formal de se apresentar como professor universitário em inglês. "Teacher" é para professores de escola, e "school professor" não é uma expressão comum. 🎓</p>
+                    `
+                }
+            },
+            {
+                id: 'situation-7',
+                tabTitle: 'Situation 7 🏋️',
+                expression: 'Gym instructor',
+                story_pt: `
+                    <h4>Primeiro Dia na Academia 💪</h4>
+                    <p>Ana se matriculou na academia e estava um pouco perdida com os equipamentos. Ela viu um homem musculoso ajudando outros alunos.</p>
+                    <p>Ela se aproximou e perguntou: "Com licença, você é o instrutor da academia?"</p>
+                    <p>Ele sorriu e respondeu: <span class="expression-highlight">"Isso mesmo! Sou o instrutor de academia, como posso ajudar?"</span></p>
+                `,
+                story_en: `
+                    <h4>First Day at the Gym 💪</h4>
+                    <p>Ana signed up at the gym and was a bit lost with the equipment. She saw a muscular man helping other students.</p>
+                    <p>She approached and asked: "Excuse me, are you the gym instructor?"</p>
+                    <p>He smiled and replied: <span class="expression-highlight">"That's right! I'm the gym instructor, how can I help?"</span></p>
+                `,
+                english_situation: `
+                    <p>You are referring to a professional who guides and trains people in a gym setting, helping them with exercises, equipment, and fitness goals. This is the standard term in English. 🤸‍♀️</p>
+                `,
+                exercise: {
+                    question: `
+                        <p>Você está procurando alguém para te ajudar com seu treino na academia.</p>
+                        <p>Qual profissional você procuraria?</p>
+                    `,
+                    options: [
+                        { text: 'A) A gym teacher', isCorrect: false },
+                        { text: 'B) A gym instructor', isCorrect: true },
+                        { text: 'C) A gym trainer', isCorrect: false }
+                    ],
+                    explanation: `
+                        <p><strong style="color: var(--accent-yello);">Por quê?</strong> Embora "gym trainer" seja compreensível, "gym instructor" é o termo mais comum e formal para o profissional que orienta na academia. "Gym teacher" não é usado para este contexto. 🏋️‍♂️</p>
+                    `
+                }
+            },
+            {
+                id: 'situation-8',
+                tabTitle: 'Situation 8 🗣️',
+                expression: "What's up buddy?",
+                story_pt: `
+                    <h4>Encontro Inesperado no Café ☕</h4>
+                    <p>Lucas estava sentado em um café, pensativo, olhando pela janela. Seu amigo, Gabriel, que não via há um tempo, se aproximou e sentou-se à mesa.</p>
+                    <p>Gabriel percebeu que Lucas parecia um pouco distante e, para quebrar o gelo e incentivá-lo a falar, perguntou com um sorriso: <span class="expression-highlight">"E aí, meu camarada? Tudo bem por aqui?"</span></p>
+                `,
+                story_en: `
+                    <h4>Unexpected Coffee Shop Encounter ☕</h4>
+                    <p>Lucas was sitting in a coffee shop, lost in thought, looking out the window. His friend, Gabriel, whom he hadn't seen in a while, approached and sat down at the table.</p>
+                    <p>Gabriel noticed Lucas seemed a bit distant and, to break the ice and encourage him to speak, asked with a smile: <span class="expression-highlight">"What's up buddy? Everything alright here?"</span></p>
+                `,
+                english_situation: `
+                    <p>This is a very informal and friendly greeting, often used among close friends. It's not just a "hello," but also an invitation for the other person to share what's on their mind or what they've been up to. It shows genuine interest and encourages conversation. 🤗</p>
+                `,
+                exercise: {
+                    question: `
+                        <p>Você encontra um amigo que parece preocupado e quer que ele se sinta à vontade para conversar.</p>
+                        <p>Qual é a melhor forma de iniciar a conversa?</p>
+                    `,
+                    options: [
+                        { text: 'A) "Hello, friend!"', isCorrect: false },
+                        { text: 'B) "How are you, buddy?"', isCorrect: false },
+                        { text: 'C) "What\'s up buddy?"', isCorrect: true }
+                    ],
+                    explanation: `
+                        <p><strong style="color: var(--accent-yello);">Por quê?</strong> "What's up buddy?" é a expressão mais natural e informal para cumprimentar um amigo e, ao mesmo tempo, convidá-lo a compartilhar o que está acontecendo. As outras opções são mais diretas ou formais demais para o contexto de encorajar alguém a desabafar. 🗣️</p>
+                    `
+                }
+            },
+            {
+                id: 'situation-9',
+                tabTitle: 'Situation 9 🎉',
+                expression: 'Glad you could make it',
+                story_pt: `
+                    <h4>Chegada na Festa de Aniversário 🥳</h4>
+                    <p>Na festa de aniversário de Ana, ela estava recebendo os convidados. Seu amigo de longa data, Carlos, que ela pensou que não conseguiria ir, finalmente chegou.</p>
+                    <p>Ana, com um sorriso enorme, o abraçou e disse: <span class="expression-highlight">"Que bom que você conseguiu vir, Carlos! Fico muito feliz!"</span></p>
+                `,
+                story_en: `
+                    <h4>Arrival at the Birthday Party 🥳</h4>
+                    <p>At Ana's birthday party, she was greeting guests. Her long-time friend, Carlos, whom she thought wouldn't be able to make it, finally arrived.</p>
+                    <p>Ana, with a huge smile, hugged him and said: <span class="expression-highlight">"Glad you could make it, Carlos! I'm so happy!"</span></p>
+                `,
+                english_situation: `
+                    <p>This expression is used to welcome someone who has arrived at an event, especially when there was a possibility they might not come, or when their presence is particularly appreciated. It conveys warmth and appreciation for their effort to attend. Brazilians often forget this natural English phrase, opting for more literal translations like "Good that you came." 💖</p>
+                `,
+                exercise: {
+                    question: `
+                        <p>Você organizou um jantar e um amigo que estava em dúvida se viria finalmente aparece.</p>
+                        <p>Como você o cumprimentaria, expressando sua satisfação?</p>
+                    `,
+                    options: [
+                        { text: 'A) "Good that you came!"', isCorrect: false },
+                        { text: 'B) "Welcome to my dinner!"', isCorrect: false },
+                        { text: 'C) "Glad you could make it!"', isCorrect: true }
+                    ],
+                    explanation: `
+                        <p><strong style="color: var(--accent-yello);">Por quê?</strong> "Glad you could make it!" é a expressão mais natural e idiomática para expressar satisfação pela presença de alguém em um evento, especialmente quando a presença não era garantida. É uma frase que soa muito mais nativa do que uma tradução literal. 🎉</p>
+                    `
+                }
+            },
+            {
+                id: 'situation-10',
+                tabTitle: 'Situation 10 🎂',
+                expression: 'Happy Birthday, many happy returns',
+                story_pt: `
+                    <h4>Celebração de Aniversário 🎉</h4>
+                    <p>Era o aniversário de 50 anos de Dona Lúcia, e sua família e amigos se reuniram para uma festa surpresa. Quando ela entrou na sala, todos gritaram em coro.</p>
+                    <p>Seu filho, Pedro, a abraçou e disse: <span class="expression-highlight">"Feliz aniversário, mãe! Que você tenha muitos e muitos anos de vida!"</span></p>
+                `,
+                story_en: `
+                    <h4>Birthday Celebration 🎉</h4>
+                    <p>It was Dona Lúcia's 50th birthday, and her family and friends gathered for a surprise party. When she entered the room, everyone shouted in unison.</p>
+                    <p>Her son, Pedro, hugged her and said: <span class="expression-highlight">"Happy Birthday, Mom! Many happy returns!"</span></p>
+                `,
+                english_situation: `
+                    <p>This is a traditional and warm way to wish someone a happy birthday, with "many happy returns" being a classic British English phrase meaning "I hope you have many more happy birthdays." It's a lovely, slightly more formal addition to "Happy Birthday." 🎁</p>
+                `,
+                exercise: {
+                    question: `
+                        <p>Seu amigo está fazendo aniversário e você quer desejar a ele um feliz dia e muitos anos de vida.</p>
+                        <p>Qual é a melhor forma de expressar isso?</p>
+                    `,
+                    options: [
+                        { text: 'A) "Happy Birthday, I wish you many years!"', isCorrect: false },
+                        { text: 'B) "Happy Birthday, many happy returns!"', isCorrect: true },
+                        { text: 'C) "Happy Birthday, long life!"', isCorrect: false }
+                    ],
+                    explanation: `
+                        <p><strong style="color: var(--accent-yello);">Por quê?</strong> "Happy Birthday, many happy returns!" é a expressão mais completa e idiomática para desejar um feliz aniversário e muitos anos de vida em inglês. "Many happy returns" é uma forma tradicional e elegante de expressar o desejo de que a pessoa celebre muitos outros aniversários felizes. 🎂</p>
+                    `
+                }
+            }
+        ];
+
+        let currentLessonIndex = -1;
+        let activeTabElement = null;
+
+        function renderLesson(lessonIndex) {
+            const lesson = lessons[lessonIndex];
+            const lessonContentDiv = document.getElementById('lesson-content');
+            const lessonTitleH2 = document.getElementById('lesson-title');
+
+            lessonTitleH2.innerHTML = `🔹 ${lesson.tabTitle} — <span style="color: var(--accent-yello);">${lesson.expression}</span>`;
+            lessonContentDiv.innerHTML = ''; // Clear previous content
+
+            // Story in Portuguese
+            lessonContentDiv.innerHTML += `
+                <h3 style="color: var(--accent-cyan); text-shadow: 0 0 8px rgba(78,242,255,0.5);">História em Português 🇧🇷</h3>
+                <div class="story-section">
+                    ${lesson.story_pt}
+                </div>
+                <div class="separator"></div>
+            `;
+
+            // Story in English
+            lessonContentDiv.innerHTML += `
+                <h3 style="color: var(--accent-cyan); text-shadow: 0 0 8px rgba(78,242,255,0.5);">Story in English 🇺🇸🇬🇧</h3>
+                <div class="story-section">
+                    ${lesson.story_en}
+                </div>
+                <div class="separator"></div>
+            `;
+
+            // Real-feeling English Situation
+            lessonContentDiv.innerHTML += `
+                <h3 style="color: var(--accent-cyan); text-shadow: 0 0 8px rgba(78,242,255,0.5);">Real-Feeling English Situation 💡</h3>
+                <div class="story-section">
+                    ${lesson.english_situation}
+                </div>
+                <div class="separator"></div>
+            `;
+
+            // Quick Exercise
+            lessonContentDiv.innerHTML += `
+                <h3 style="color: var(--accent-yello); text-shadow: 0 0 8px rgba(255,226,95,0.5);">Quick Exercise ✅</h3>
+                <div class="exercise-section">
+                    ${lesson.exercise.question}
+                    <div class="options" id="exercise-options-${lessonIndex}">
+                        ${lesson.exercise.options.map((option, idx) => `
+                            <label>
+                                <input type="radio" name="exercise-q-${lessonIndex}" value="${idx}" data-correct="${option.isCorrect}">
+                                ${option.text}
+                            </label>
+                        `).join('')}
+                    </div>
+                    <button onclick="checkExerciseAnswer(${lessonIndex})">CHECK ANSWER</button>
+                    <div class="explanation" id="exercise-explanation-${lessonIndex}" style="display: none;">
+                        ${lesson.exercise.explanation}
+                    </div>
+                </div>
+            `;
+        }
+
+        function checkExerciseAnswer(lessonIndex) {
+            const optionsDiv = document.getElementById(`exercise-options-${lessonIndex}`);
+            const explanationDiv = document.getElementById(`exercise-explanation-${lessonIndex}`);
+            const radios = optionsDiv.querySelectorAll('input[type="radio"]');
+            let selectedCorrect = false;
+
+            radios.forEach(radio => {
+                const label = radio.closest('label');
+                label.classList.remove('correct', 'incorrect');
+                if (radio.checked) {
+                    if (radio.dataset.correct === 'true') {
+                        label.classList.add('correct');
+                        selectedCorrect = true;
+                    } else {
+                        label.classList.add('incorrect');
+                    }
+                }
+            });
+
+            explanationDiv.style.display = 'block';
+
+            if (selectedCorrect && currentLessonIndex !== -1) {
+                const tabElement = document.querySelector(`.tab-item[data-lesson-id="${lessons[currentLessonIndex].id}"]`);
+                if (tabElement && !tabElement.classList.contains('completed')) {
+                    tabElement.classList.add('completed');
+                }
+            }
+        }
+
+        function setActiveTab(tabElement, lessonIndex) {
+            if (activeTabElement) {
+                activeTabElement.classList.remove('active');
+            }
+            tabElement.classList.add('active');
+            activeTabElement = tabElement;
+            currentLessonIndex = lessonIndex;
+            renderLesson(lessonIndex);
+        }
+
+        // Initialize tabs
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabNavigation = document.getElementById('tab-navigation');
+            lessons.forEach((lesson, index) => {
+                const tabItem = document.createElement('div');
+                tabItem.classList.add('tab-item');
+                tabItem.textContent = lesson.tabTitle;
+                tabItem.dataset.lessonId = lesson.id;
+                tabItem.addEventListener('click', () => setActiveTab(tabItem, index));
+                tabNavigation.appendChild(tabItem);
+            });
+
+            // Set initial active tab (Situation 1)
+            if (lessons.length > 0) {
+                const firstTab = tabNavigation.querySelector('.tab-item');
+                if (firstTab) {
+                    setActiveTab(firstTab, 0);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
